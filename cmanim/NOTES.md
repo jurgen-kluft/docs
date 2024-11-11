@@ -1,4 +1,4 @@
-# canim (C#)
+# canim
 
 - OpenGL
 - OpenCL
@@ -14,35 +14,36 @@ Everything is part of a scene, the scene acts as the owner and container for all
 
 ### Mesh Builders
 
-- DataSet to Mesh
-- Text to Mesh
-- 2D Curve to Mesh
-- 3D Curve to Mesh
-- 2D Shape to Mesh
-- 3D Shape to Mesh
-- 2D Function to Mesh
-- 3D Function to Mesh
+A mesh builder pulls data from an interface that is providing the following sets of data:
+
+- Vertices
+- Normals
+- Colors (RGBA)
+- Primitives (Triangles, Lines, Points)
+- Custom data (UV, Tangents, Bitangents, etc.)
+
+Any Producer providing the above data streams can be used to build a visual representation, for example:
+
+- Text
+- Curves
+- Shapes
+- Lines
+- Points
 
 ### Fundamentals
 
-- Time is the fundamental unit
-- Scene -> Sequence -> Frame
+- Scene -> Sequence -> Frame (Time)
 - Camera
 - Mesh
 - Sampler
 - Modifier
 
-- Precalculated data is wrapped by a Sampler which can be used to sample the data, together with a Mesh Builder to produce a Mesh each frame
-- Functions that produce data are wrapped by a specific Sampler which can be used to sample the function, together with a Mesh Builder to produce a Mesh each frame
+- Precalculated data is wrapped by a Provider which can be used to sample the data, together with a Mesh Builder to produce a Mesh each frame
+- Functions that produce data are wrapped by a Provider which can be used to sample the function, together with a Mesh Builder to produce a visual representation each frame
 
-### Objects
+### Visual Object
 
-Fundamental Object is a Mesh, a Mesh is a collection of primitives, vertices and indices and can be rendered as points, lines, or filled shapes
-
-- Text is a Mesh
-- Curve is a Mesh
-- 2D Shapes (Rectangle, Circle, Star, Triangle, Hexagon, Octagon, etc., all Meshes)
-- 3D Shapes (Cube, Sphere, Cylinder, Cone, Pyramid, Beam, etc., all Meshes)
+Fundamental Visual Object is a Vertex + Index Buffer + Primitive Type + VS/PS Shader (a Mesh).
 
 ### Morphing and Animation
 
@@ -66,6 +67,8 @@ Note: We might need to use GPU Compute for this to increase performance.
 - Tracking mass/density/volume or any other property changes and reacting to them
 
 ### Attribute Modifiers
+
+A Modifier is a function that takes an attribute and modifies it in some way over a period of time. Since there are many ways to modify an attribute over time (e.g. linear, exponential, logarithmic, ease-in, ease-out, etc.), we can define a Modifier as a function that takes a time value and returns a value that can be used to modify the attribute.
 
 - Position, Rotation, Scale
 - Color
